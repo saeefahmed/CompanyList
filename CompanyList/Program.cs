@@ -43,6 +43,11 @@ app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseCors(MyAllowSpecificOrigins);
+
 app.MapControllers();
 
 
