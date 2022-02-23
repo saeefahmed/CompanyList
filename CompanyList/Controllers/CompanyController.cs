@@ -27,8 +27,8 @@ namespace CompanyList.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult> GetCompanyById(int id)
         {
-            context.Companies.FirstOrDefault(c=> c.CompanyId == id);
-            return Ok();
+            var com = context.Companies.FirstOrDefault(c=> c.CompanyId == id);
+            return Ok(com);
         }
 
         [HttpPost]
@@ -45,8 +45,8 @@ namespace CompanyList.Controllers
             return Ok(company);
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<ActionResult> UpdateCompany(int id, Company company)
+        [HttpPut]
+        public async Task<ActionResult> UpdateCompany(Company company)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +54,7 @@ namespace CompanyList.Controllers
             }
 
 
-            var existingCompany = context.Companies.Where(c => c.CompanyId == id).FirstOrDefault<Company>();
+            var existingCompany = context.Companies.Where(c => c.CompanyId == company.CompanyId).FirstOrDefault<Company>();
             if (existingCompany != null)
             {
                 existingCompany.CompanyName = company.CompanyName;
@@ -65,7 +65,7 @@ namespace CompanyList.Controllers
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(existingCompany);
         }
 
         [HttpDelete("{id:int}")]
